@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Agencia{% endblock %}
+
+{% block body %}
+    <h1>Edit Agencia</h1>
+
+    {{ include('agencia/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_agencia_index') }}">back to list</a>
+
+    {{ include('agencia/_delete_form.html.twig') }}
+{% endblock %}

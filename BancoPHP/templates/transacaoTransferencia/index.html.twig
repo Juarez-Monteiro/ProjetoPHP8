@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Transacao index{% endblock %}
+
+{% block body %}
+    <h1>Transacao index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descricao</th>
+                <th>Valor</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for transacao in transacaos %}
+            <span class="px-4 rounded-md bg-gray-200 dark:bg-gray-700">
+            <tr>
+                <td>{{ transacao.id }}</td>
+                <td>{{ transacao.descricao }}</td>
+                <td>{{ transacao.valor }}</td>
+            </tr>
+            </span>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_transacaoTransferencia_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Gerente{% endblock %}
+
+{% block body %}
+    <h1>Edit Gerente</h1>
+
+    {{ include('gerente/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_gerente_index') }}">back to list</a>
+
+    {{ include('gerente/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Agencia index{% endblock %}
+
+{% block body %}
+    <h1>Agencia index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomeAgencia</th>
+                <th>Codigo</th>
+                <th>Endereco</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for agencium in agencias %}
+            <tr>
+                <td>{{ agencium.id }}</td>
+                <td>{{ agencium.nomeAgencia }}</td>
+                <td>{{ agencium.codigo }}</td>
+                <td>{{ agencium.endereco }}</td>
+                <td>
+                    <a href="{{ path('app_agencia_show', {'id': agencium.id}) }}">show</a>
+                    <a href="{{ path('app_agencia_edit', {'id': agencium.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_agencia_new') }}">Create new</a>
+{% endblock %}

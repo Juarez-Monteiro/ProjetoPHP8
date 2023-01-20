@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminitradorController!{% endblock %}
+
+{% block body %}
+  {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+    <h1>Register</h1>
+
+    {{ form_start(cadastroGerenteForm) }}
+        {{ form_row(cadastroGerente.nome) }}
+        {{ form_row(cadastroGerente.email) }}
+        {{ form_row(cadastroGerente.plainPassword, {
+            label: 'Password'
+        }) }}
+        {{ form_row(cadastroGerente.agreeTerms) }}
+
+        <button type="submit" class="btn">Register</button>
+    {{ form_end(cadastroGerenteForm) }}
+{% endblock %}
