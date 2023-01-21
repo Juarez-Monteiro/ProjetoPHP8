@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conta{% endblock %}
+
+{% block body %}
+    <h1>Conta</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ contum.id }}</td>
+            </tr>
+            <tr>
+                <th>Saldo</th>
+                <td>{{ contum.saldo }}</td>
+            </tr>
+            <tr>
+                <th>NumeroDaConta</th>
+                <td>{{ contum.numeroDaConta }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ contum.status ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{{ path('app_Sacar_cliente_new', {id:app.user.id, conta:contum.id}) }}">Sacar</a>
+    <a href="{{ path('app_Depositar_cliente_new', {id:app.user.id, conta:contum.id}) }}">Depositar</a>
+    <a href="{{ path('app_Transferencia_cliente_new', {id:app.user.id, conta:contum.id}) }}">Tranferencia</a>
+    <a href="{{ path('app_cliente_show', {id:app.user.id}) }}">Voltar</a>
+
+    {% if extrato |length > 0 %}
+       <ul> {% for transacao in extrato %}
+            
+
+        <li>
+            {{ transacao.descricao }}
+            {{ transacao.valor }}
+            {{ transacao.contaDestino}}
+            {{ transacao.contaOrigem }}</li>
+
+        {% endfor %}
+   </ul> {% endif %}
+{% endblock %}

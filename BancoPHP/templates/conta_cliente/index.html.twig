@@ -11,24 +11,19 @@
                 <th>Id</th>
                 <th>Saldo</th>
                 <th>NumeroDaConta</th>
-                <th>Tipo de Conta</th>
-                <th>Cliente</th>
                 <th>Status</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for contum in contas %}
+        {% for contum in minhasContas %}
             <tr>
                 <td>{{ contum.id }}</td>
                 <td>{{ contum.saldo }}</td>
                 <td>{{ contum.numeroDaConta }}</td>
-                <td>{{ contum.tipos }}</td>
-                <td>{{ contum.user }}</td>
                 <td>{{ contum.status ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('app_conta_show', {'id': contum.id}) }}">show</a>
-                    <a href="{{ path('app_conta_edit', {'id': contum.id}) }}">edit</a>
+                    <a href="{{ path('app_cliente_showConta', {id:app.user.id, conta:contum.id}) }}">Minha conta</a>
                 </td>
             </tr>
         {% else %}
@@ -39,5 +34,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_conta_new') }}">Create new</a>
+    <a href="{{ path('app_conta_cliente_new', {id:app.user.id}) }}">Create new</a>
 {% endblock %}

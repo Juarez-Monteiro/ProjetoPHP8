@@ -39,6 +39,18 @@ class TransacaoRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByConta($id): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.contaDestino = :val')
+            ->orWhere('t.contaOrigem = :val')
+            ->setParameter('val', $id)
+            ->orderBy('t.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Transacao[] Returns an array of Transacao objects
 //     */

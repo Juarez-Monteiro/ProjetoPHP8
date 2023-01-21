@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Transacao;
-use App\Form\TransacaoType;
-use App\Form\TransacaoTransferenciaType;
+use App\Form\Transacao1Type;
 use App\Repository\UserRepository;
 use App\Repository\TransacaoRepository;
 use App\Repository\ContaRepository;
@@ -15,19 +14,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 
-#[Route('/transacao')]
-class TransacaoController extends AbstractController
+#[Route('/transacao/cliente')]
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
+class TransacaoClienteController extends AbstractController
 {
-    #[Route('/', name: 'app_transacao_index', methods: ['GET'])]
-    #[IsGranted('ROLE_GERENTE')]
-    public function index(TransacaoRepository $transacaoRepository): Response
-    {
-        return $this->render('transacao/index.html.twig', [
-            'transacaos' => $transacaoRepository->findAll('id' ),
-        ]);
-    }
-
-    #[Route('/new', name: 'app_transacao_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_transacao_cliente_new', methods: ['GET', 'POST'])]
     public function new(Request $request, TransacaoRepository $transacaoRepository,ContaRepository $contaRepository, EntityManagerInterface $entityManager): Response
     {
         $transacao = new Transacao();
@@ -49,17 +40,17 @@ class TransacaoController extends AbstractController
             $entityManager->flush();
             $transacaoRepository->save($transacao, true);
 
-            return $this->redirectToRoute('app_transacao_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_transacao_cliente_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('transacao/new.html.twig', [
+        return $this->renderForm('transacao_cliente/new.html.twig', [
             'transacao' => $transacao,
             'form' => $form,
         ]);
     }
-   
-    #[Route('/newsac', name: 'app_transacaosac_new', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_GERENTE')]
+
+    #[Route('/newsac', name: 'app_transacaosac_cliente_new', methods: ['GET', 'POST'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function newSac(Request $request, TransacaoRepository $transacaoRepository,ContaRepository $contaRepository, EntityManagerInterface $entityManager): Response
     {
         $transacao = new Transacao();
@@ -74,29 +65,29 @@ class TransacaoController extends AbstractController
             $valor = $transacao->getValor();
             if($valor <= 0 ){
                 $this->addFlash('error', 'Iforme o valor maior que zero!');
-                return $this->redirectToRoute('app_transacaoTransferencia_new');
+                return $this->redirectToRoute('app_transacaoTransferencia_cliente_new');
             }
             $conta = $contaRepository->findOneBy(['numeroDaConta' => $numeroDaConta]);
             if($conta->getSaldo() < $valor ){
                 $this->addFlash('error', 'Valor maior que Saldo!');
-                return $this->redirectToRoute('app_transacaoTransferencia_new');
+                return $this->redirectToRoute('app_transacaoTransferencia_cliente_new');
             }
             $conta->setSaldo($conta->getSaldo() - $valor);
             $entityManager->persist($conta);
             $entityManager->flush();
             $transacaoRepository->save($transacao, true);
 
-            return $this->redirectToRoute('app_transacao_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_transacao_cliente_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('transacao/new.html.twig', [
+        return $this->renderForm('transacaoCliente/new.html.twig', [
             'transacao' => $transacao,
             'form' => $form,
         ]);
     }
 
-    #[Route('/newtransferencia', name: 'app_transacaoTransferencia_new', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_GERENTE')]
+    #[Route('/newtransferencia', name: 'app_transacaoTransferencia_cliente_new', methods: ['GET', 'POST'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function newTransferencia(Request $request, TransacaoRepository $transacaoRepository,ContaRepository $contaRepository, 
     EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
@@ -113,12 +104,12 @@ class TransacaoController extends AbstractController
             $valor = $transacao->getValor();
             if($valor <= 0 ){
                 $this->addFlash('error', 'Iforme o valor maior que zero!');
-                return $this->redirectToRoute('app_transacaoTransferencia_new');
+                return $this->redirectToRoute('app_transacaoTransferencia_cliente_new');
             }
             $conta = $contaRepository->findOneBy(['numeroDaConta' => $numeroDaConta]);
             if($conta->getSaldo() < $valor ){
                 $this->addFlash('error', 'Valor maior que Saldo!');
-                return $this->redirectToRoute('app_transacaoTransferencia_new');
+                return $this->redirectToRoute('app_transacaoTransferencia_cliente_new');
             }
             $conta->setSaldo($conta->getSaldo() - $valor);
             $entityManager->persist($conta);
@@ -131,21 +122,21 @@ class TransacaoController extends AbstractController
             $entityManager->flush();
             $transacaoRepository->save($transacao, true);
 
-            return $this->redirectToRoute('app_transacaoTransferencia_new', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_transacaoTransferencia_cliente_new', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('transacaoTransferencia/new.html.twig', [
+        return $this->renderForm('transacaoTransferenciaCliente/new.html.twig', [
             'transacao' => $transacao,
             'form' => $form,
         ]);
     }
-
-    #[Route('/{id}', name: 'app_transacao_show', methods: ['GET'])]
-    #[IsGranted('ROLE_GERENTE')]
+ 
+    #[Route('/{id}', name: 'app_transacao_cliente_show', methods: ['GET'])]
     public function show(Transacao $transacao): Response
     {
-        return $this->render('transacao/show.html.twig', [
+        return $this->render('transacao_cliente/show.html.twig', [
             'transacao' => $transacao,
         ]);
     }
+
 }
