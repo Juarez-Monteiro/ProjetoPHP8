@@ -16,9 +16,9 @@ class ContaType extends AbstractType
         $builder
            // ->add('saldo')
            // ->add('numeroDaConta')
-            ->add('status')
+            // ->add('status')
             ->add('agencia')
-            //->add('user')
+            // ->add('user')
             ->add('tipos')
         ;
     }

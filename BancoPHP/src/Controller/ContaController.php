@@ -4,23 +4,27 @@ namespace App\Controller;
 
 use App\Entity\Conta;
 use App\Form\ContaType;
+use App\Form\ContaGerenteType;
 use App\Repository\ContaRepository;
 use Container8xnAxK7\getUserService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/conta')]
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
 class ContaController extends AbstractController
 {
     #[Route('/', name: 'app_conta_index', methods: ['GET'])]
+    #[IsGranted('ROLE_GERENTE')]
     public function index(ContaRepository $contaRepository): Response
     {
+       
         return $this->render('conta/index.html.twig', [
-            'contas' => $contaRepository->findBy($this->getUser()),
+            'contas' => $contaRepository->findAll('id'),
+            
         ]);
     }
 
@@ -30,13 +34,13 @@ class ContaController extends AbstractController
         $contum = new Conta();
         $form = $this->createForm(ContaType::class, $contum);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $contum->setStatus(false);
             $contum->setNumeroDaConta(rand(1000, 9999));
             $contum->setUser($this->getUser());
             $contaRepository->save($contum, true);
             $this->addFlash('success', 'Conta criada com sucesso!');
-            return $this->redirectToRoute('app_conta_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_cliente_show', ['id'=> $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('conta/new.html.twig', [
@@ -56,7 +60,7 @@ class ContaController extends AbstractController
     #[Route('/{id}/edit', name: 'app_conta_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Conta $contum, ContaRepository $contaRepository): Response
     {
-        $form = $this->createForm(ContaType::class, $contum);
+        $form = $this->createForm(ContaGerenteType::class, $contum);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

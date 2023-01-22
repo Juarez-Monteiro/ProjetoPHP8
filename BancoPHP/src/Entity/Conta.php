@@ -16,7 +16,7 @@ class Conta
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?float $saldo = null;
+    private ?float $saldo = 0;
 
     #[ORM\Column]
     private ?int $numeroDaConta ;

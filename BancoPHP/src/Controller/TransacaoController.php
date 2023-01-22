@@ -18,7 +18,7 @@ use Doctrine\ORM\EntityManagerInterface;
 #[Route('/transacao')]
 class TransacaoController extends AbstractController
 {
-    #[Route('/', name: 'app_transacao_index', methods: ['GET'])]
+    #[Route('/listar', name: 'app_transacao_index', methods: ['GET'])]
     #[IsGranted('ROLE_GERENTE')]
     public function index(TransacaoRepository $transacaoRepository): Response
     {
@@ -28,7 +28,7 @@ class TransacaoController extends AbstractController
     }
 
     #[Route('/new', name: 'app_transacao_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, TransacaoRepository $transacaoRepository,ContaRepository $contaRepository, EntityManagerInterface $entityManager): Response
+    public function newDep(Request $request, TransacaoRepository $transacaoRepository,ContaRepository $contaRepository, EntityManagerInterface $entityManager): Response
     {
         $transacao = new Transacao();
         $form = $this->createForm(TransacaoType::class, $transacao);

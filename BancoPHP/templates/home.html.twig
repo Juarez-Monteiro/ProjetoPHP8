@@ -1,0 +1,174 @@
+
+ 
+{% if is_granted('ROLE_GERENTE') %}
+    
+    <a
+  class="group relative inline-flex items-center overflow-hidden rounded bg-indigo-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
+  href="{{ path('app_conta_index') }}"{#faltou implementar, porque tava dando muitos erros e o tempo acabou!#}
+>
+  <span
+    class="absolute right-0 translate-x-full transition-transform group-hover:-translate-x-4"
+  >
+    <svg
+      class="h-5 w-5"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M17 8l4 4m0 0l-4 4m4-4H3"
+      />
+    </svg>
+  </span> 
+
+  <span class="text-sm font-medium transition-all group-hover:mr-4">
+    Listar Clientes
+  </span>
+</a>
+{% endif %}
+{% if not app.user %} 
+<a
+  class="group relative inline-flex items-center overflow-hidden rounded bg-indigo-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
+  href="{{ path('app_register') }}"
+>
+  <span
+    class="absolute right-0 translate-x-full transition-transform group-hover:-translate-x-4"
+  >
+    <svg
+      class="h-5 w-5"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M17 8l4 4m0 0l-4 4m4-4H3"
+      />
+    </svg>
+  </span> 
+
+  <span class="text-sm font-medium transition-all group-hover:mr-4">
+    Faça seu cadastro
+  </span>
+</a>
+
+<a
+  class="group relative inline-flex items-center overflow-hidden rounded bg-indigo-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
+  href="{{ path('app_transacao_visitante_new') }}"
+>
+  <span
+    class="absolute right-0 translate-x-full transition-transform group-hover:-translate-x-4"
+  >
+    <svg
+      class="h-5 w-5"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M17 8l4 4m0 0l-4 4m4-4H3"
+      />
+    </svg>
+  </span>
+
+  <span class="text-sm font-medium transition-all group-hover:mr-4">
+    Depositar
+  </span>
+</a>
+{% endif %}  
+{% if app.user %}
+    <a
+    class="group relative inline-flex items-center overflow-hidden rounded bg-indigo-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
+    href="{{ path('app_conta_cliente_new',{id:app.user.id}) }}"
+    >
+    <span
+        class="absolute right-0 translate-x-full transition-transform group-hover:-translate-x-4"
+    >
+        <svg
+        class="h-5 w-5"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"
+        />
+        </svg>
+    </span> 
+
+    <span class="text-sm font-medium transition-all group-hover:mr-4">
+        Criar Conta
+    </span>
+    </a>
+
+    <a
+    class="group relative inline-flex items-center overflow-hidden rounded bg-indigo-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
+    href="{{ path('app_cliente_show',{id:app.user.id}) }}"
+    >
+    <span
+        class="absolute right-0 translate-x-full transition-transform group-hover:-translate-x-4"
+    >
+        <svg
+        class="h-5 w-5"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"
+        />
+        </svg>
+    </span>
+
+    <span class="text-sm font-medium transition-all group-hover:mr-4">
+        Acesse seu cadastro
+    </span>
+    </a>
+ 
+<a
+  class="group relative inline-flex items-center overflow-hidden rounded bg-indigo-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
+  href="{{ path('app_transacao_visitante_new') }}"
+>
+  <span
+    class="absolute right-0 translate-x-full transition-transform group-hover:-translate-x-4"
+  >
+    <svg
+      class="h-5 w-5"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M17 8l4 4m0 0l-4 4m4-4H3"
+      />
+    </svg>
+  </span>
+
+  <span class="text-sm font-medium transition-all group-hover:mr-4">
+    Depositar
+  </span>
+</a>
+{% endif %}

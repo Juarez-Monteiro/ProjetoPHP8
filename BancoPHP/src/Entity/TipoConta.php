@@ -15,7 +15,7 @@ class TipoConta
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 2)]
     private ?string $tipo ;
 
     #[ORM\OneToMany(mappedBy: 'tipos', targetEntity: Conta::class)]

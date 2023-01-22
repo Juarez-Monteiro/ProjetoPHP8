@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Gerente;
+use App\Entity\Conta;
 use App\Form\GerenteType;
 use App\Repository\GerenteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GerenteController extends AbstractController
 {
     #[Route('/', name: 'app_gerente_index', methods: ['GET'])]
-    public function index(GerenteRepository $gerenteRepository): Response
+    public function index(ContaRepository $contaRepository): Response
     {
         return $this->render('gerente/index.html.twig', [
             'gerentes' => $gerenteRepository->findAll(),
@@ -74,5 +75,16 @@ class GerenteController extends AbstractController
         }
 
         return $this->redirectToRoute('app_gerente_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/gerente', name: 'app_gerente')]
+    public function indexgerente(AgenciaRepository $agenciaRepository, UserRepository $userRepository): Response
+    {
+        $contasAgencia= $agenciaRepository->getContas();
+        dd($agencia);
+        return $this->render('inicio/indexGerente.html.twig', [
+            'controller_name' => 'InicioController',
+            'contasAgencia' => $contasAgencia
+        ]);
     }
 }

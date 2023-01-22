@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Conta</h1>
 
-    <table class="table">
+    <table class="table m-5">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -31,7 +31,7 @@
     <a href="{{ path('app_cliente_show', {id:app.user.id}) }}">Voltar</a>
 
     {% if extrato |length > 0 %}
-       <ul> {% for transacao in extrato %}
+       <ul class="mb-5"> {% for transacao in extrato %}
             
 
         <li>
@@ -42,4 +42,5 @@
 
         {% endfor %}
    </ul> {% endif %}
+    <a href="{{ path('app_inicio') }}" class=" bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-white rounded-md border p-2 mt-4 ">Home</a>
 {% endblock %}

@@ -2,12 +2,26 @@
 
 {% block title %}Edit Conta{% endblock %}
 
-{% block body %}
-    <h1>Edit Conta</h1>
+ {% block body %}
+    {# <h1>Edit Conta</h1>
 
     {{ include('conta/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('app_conta_index') }}">back to list</a>
 
     {{ include('conta/_delete_form.html.twig') }}
-{% endblock %}
+{% endblock %} #} 
+{{ form_start(form) }}
+    <h1 class="text-5xl mb-10">Edit Conta</h1>
+
+    <div>
+        {{ form_label(form.status, 'Status', {'label_attr': {'class': 'block text-sm text-gray-700 dark:text-gray-300 font-medium text-2xl'}})  }}
+        {{ form_widget(form.status, )}}
+        {{ form_errors(form.status,) }}
+    </div>
+    
+      <button type="submit" class=" bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-white rounded-md border p-2 mt-4 mb-2">{{ button_label|default('Salvar') }}</button>
+      <a href="{{ path('app_inicio') }}" class=" bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-white rounded-md border p-2 mt-4 mb-2">Home</a>
+{{ form_end(form) }}
+
+{% endblock %} 

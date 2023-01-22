@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Conta index</h1>
 
-    <table class="table">
+    <table class="table mb-7">
         <thead>
             <tr>
                 <th>Id</th>
@@ -17,8 +17,9 @@
         </thead>
         <tbody>
         {% for contum in minhasContas %}
-            <tr>
-                <td>{{ contum.id }}</td>
+            <tr >
+            
+                <td class="w-30">{{ contum.id }}</td>
                 <td>{{ contum.saldo }}</td>
                 <td>{{ contum.numeroDaConta }}</td>
                 <td>{{ contum.status ? 'Yes' : 'No' }}</td>
@@ -33,6 +34,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_conta_cliente_new', {id:app.user.id}) }}">Create new</a>
+    <a href="{{ path('app_inicio') }}" class=" bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-white rounded-md border p-2 mt-4 ">Home</a>
+    <a href="{{ path('app_conta_cliente_new', {id:app.user.id}) }}" class=" bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-white rounded-md border p-2 mt-4 mb-2">Criar nova conta</a>
+    {# <a href="{{ path('app_conta_cliente_new', {id:app.user.id}) }}">Create new</a> #}
 {% endblock %}

@@ -7,16 +7,27 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
+    <p  class="text-4xl mb-10"  >Cadastro de Usuário</p>
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.nome) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
+    <div>
+        {{ form_label(registrationForm.nome, 'Nome', {'label_attr': {'class': 'block text-sm text-gray-700 dark:text-gray-300 font-medium'}})  }}
+        {{ form_widget(registrationForm.nome, {'attr': {'class': 'md:w-1/3 block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md border p-2 mt-1 mb-2'}})}}
+        {{ form_errors(registrationForm.nome,) }}
+    </div>
+    <div>
+        {{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'block text-sm text-gray-700 dark:text-gray-300 font-medium'}}) }}
+        {{ form_widget(registrationForm.email, {'attr': {'class': 'md:w-1/3 block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md border p-2 mt-1 mb-2'}}) }}
+        {{ form_errors(registrationForm.email) }}
+    </div>
+    <div>
+        {{ form_label(registrationForm.plainPassword, 'Senha', {'label_attr': {'class': 'block text-sm text-gray-700 dark:text-gray-300 font-medium'}}) }}
+        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'md:w-1/3 block w-full shadow-sm border-gray-300 dark:border-transparent dark:text-gray-800 rounded-md border p-2 mt-1 mb-2'}}) }}
+        {{ form_errors(registrationForm.plainPassword) }}
+    </div>
+       
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class=" bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-white rounded-md border p-2 mt-4 mb-2">Cadastrar</button>
     {{ form_end(registrationForm) }}
 {% endblock %}

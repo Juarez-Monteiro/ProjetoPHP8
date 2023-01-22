@@ -4,12 +4,17 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Conta;
+use App\Entity\Agencia;
+use App\Entity\Gerente;
 use App\Form\ContaType;
 use App\Entity\Transacao;
 use App\Form\DepositoType;
 use App\Form\TransacaoType;
+use App\Form\DepositoClienteType;
 use App\Repository\UserRepository;
 use App\Repository\ContaRepository;
+use App\Repository\AgenciaRepository;
+use App\Form\DepositoSaqueClienteType;
 use App\Repository\TransacaoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,9 +39,9 @@ class ClienteController extends AbstractController
     }
 
     #[Route('/{id}/{conta}', name: 'app_cliente_showConta', methods: ['GET'])]
-    public function showConta(User $user,TransacaoRepository $transacaoRepository, ContaRepository $contaRepository): Response
+    public function showConta(User $user,TransacaoRepository $transacaoRepository, ContaRepository $contaRepository, $conta): Response
     {
-        $Conta = $contaRepository->findOneBy(['user' => $user->getId() ]);
+        $Conta = $contaRepository->findOneBy(['user' => $user->getId(), 'id' => $conta ]);
         $Extrato = $transacaoRepository->findByConta($Conta);
         return $this->render('conta_cliente/show.html.twig', [
             'user' => $user,
@@ -54,6 +59,7 @@ class ClienteController extends AbstractController
         $form = $this->createForm(ContaType::class, $contum);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $contum->setStatus(false);
             $contum->setNumeroDaConta(rand(1000, 9999));
             $contum->setUser($this->getUser());
             $contaRepository->save($contum, true);
@@ -111,12 +117,12 @@ class ClienteController extends AbstractController
     }
 
     #[Route('/{id}/{conta}/depositar', name: 'app_Depositar_cliente_new', methods: ['GET', 'POST'])]
-    public function newDepositar(Request $request,$conta, TransacaoRepository $transacaoRepository,ContaRepository $contaRepository, 
+    public function newDepositar(Request $request,Conta $conta, TransacaoRepository $transacaoRepository,ContaRepository $contaRepository, 
     EntityManagerInterface $entityManager, User $user, UserRepository $userRepository): Response
     {
         $minhaconta = $contaRepository->findOneBy(['user' => $user->getId(), 'status' => true, 'id' => $conta]);
         $transacao = new Transacao();
-        $form = $this->createForm(DepositoType::class, $transacao);
+        $form = $this->createForm(DepositoSaqueClienteType::class, $transacao);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -135,7 +141,7 @@ class ClienteController extends AbstractController
             return $this->redirectToRoute('app_cliente_showConta', ['id'=> $user->getId(), 'conta'=> $minhaconta->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('transacao/newDeposito.html.twig', [
+        return $this->renderForm('transacao/newSaque.html.twig', [
             'transacao' => $transacao,
             'form' => $form,
         ]);
@@ -146,8 +152,9 @@ class ClienteController extends AbstractController
     EntityManagerInterface $entityManager, User $user, UserRepository $userRepository): Response
     {
         $minhaconta = $contaRepository->findOneBy(['user' => $user->getId(), 'status' => true, 'id' => $conta]);
+        // dd($minhaconta);
         $transacao = new Transacao();
-        $form = $this->createForm(DepositoType::class, $transacao);
+        $form = $this->createForm(DepositoSaqueClienteType::class, $transacao);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -170,7 +177,7 @@ class ClienteController extends AbstractController
             return $this->redirectToRoute('app_cliente_showConta', ['id'=> $user->getId(), 'conta'=> $minhaconta->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('transacao/newShow.html.twig', [
+        return $this->renderForm('transacao/newSaque.html.twig', [
             'transacao' => $transacao,
             'form' => $form,
         ]);

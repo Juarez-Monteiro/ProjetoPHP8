@@ -1,92 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello InicioController!{% endblock %}
+{% block title %}Banco PHP{% endblock %}
 
-{% block body %}
+
  
-     <a
-  class="group relative inline-flex items-center overflow-hidden rounded bg-indigo-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
-  href="{{ path('app_register') }}"
->
-  <span
-    class="absolute right-0 translate-x-full transition-transform group-hover:-translate-x-4"
-  >
-    <svg
-      class="h-5 w-5"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
+   {% block body %}
+<section class="bg-black text-white">
+  <div class=" max-w-screen-x2 px-4 py-16 sm:px-6 lg:px-8 mx-auto bg-gray-800 mt-10 w-full">
+    <div class="flex justify-center mb-20">
+      <h2 class=" font-bold sm:text-4xl">Bem vindo ao Banco PHP</h2>
+    </div>
+    <div class= "flex justify-between mt-5">
+      {% include 'home.html.twig' %}
+    </div>
+
+  
+    <div
+      class="mt-8 grid grid-cols-1 gap-8 md:mt-16 md:grid-cols-2 md:gap-12 lg:grid-cols-3"
     >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M17 8l4 4m0 0l-4 4m4-4H3"
-      />
-    </svg>
-  </span> 
+      {% if agencias|length > 0 %}
+      {% for agencia in agencias %}
+      <div class="flex items-start">
+        <span class="flex-shrink-0 rounded-lg bg-gray-800 p-4">
+          <span class="mdi mdi-bank"></span>
+        </span>
 
-  <span class="text-sm font-medium transition-all group-hover:mr-4">
-    Faça seu cadastro
-  </span>
-</a>
-<a
-  class="group relative inline-flex items-center overflow-hidden rounded bg-indigo-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
-   {% if app.user %}
-   <a href="{{ path('app_cliente_show', {id:app.user.id}) }}">
->
-  <span
-    class="absolute right-0 translate-x-full transition-transform group-hover:-translate-x-4"
-  >
-    <svg
-      class="h-5 w-5"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M17 8l4 4m0 0l-4 4m4-4H3"
-      />
-    </svg>
-  </span>
+        <div class="ml-4">
+          <h2 class="text-lg font-bold">Agencia: {{ agencia.nomeAgencia }}, {{agencia.codigo}}</h2>
 
-  <span class="text-sm font-medium transition-all group-hover:mr-4">
-    Acesse seu cadastro
-  </span>
-</a>
-  {% endif %}
-<a
-  class="group relative inline-flex items-center overflow-hidden rounded bg-indigo-900 px-8 py-3 text-white focus:outline-none focus:ring active:bg-indigo-500"
-  {# href="{{ path('app_depositar_padrao') }}" #}
->
-  <span
-    class="absolute right-0 translate-x-full transition-transform group-hover:-translate-x-4"
-  >
-    <svg
-      class="h-5 w-5"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M17 8l4 4m0 0l-4 4m4-4H3"
-      />
-    </svg>
-  </span>
-
-  <span class="text-sm font-medium transition-all group-hover:mr-4">
-    Depositar
-  </span>
-</a>
+          <p class="mt-1 text-sm text-gray-300">
+            Endereço: {{ agencia.endereco }} 
+            <br/>
+            Gerente: {{ agencia.gerente}}
+          </p>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %} 
 
 
-{% endblock %}
+
